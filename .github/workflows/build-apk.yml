@@ -1,0 +1,39 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      FLET_CLI_NO_RICH_OUTPUT: "true"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install Flet
+        run: pip install "flet[cli]==0.86.2"
+
+      - name: Build APK
+        run: flet build apk
+
+      - name: List output
+        run: find build -name "*.apk"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: duka-apk
+          path: build/**/*.apk
+          if-no-files-found: error
