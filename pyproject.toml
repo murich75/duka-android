@@ -1,0 +1,10 @@
+[project]
+name = "duka"
+version = "1.0.0"
+description = "Duka - stock, kugurisha, ideni na raporo"
+requires-python = ">=3.10"
+dependencies = ["flet==0.86.2"]
+
+[tool.flet]
+org = "rw.duka"
+product = "Duka"
